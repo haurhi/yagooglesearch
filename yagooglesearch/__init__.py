@@ -499,19 +499,21 @@ class SearchClient:
 
                 if self.verbose_output:
                     # Extract the URL title.
+                    # 2023-06-02 update
                     try:
-                        title = a.get_text()
+                        title = a.find('h3').get_text()
                     except Exception:
                         ROOT_LOGGER.warning(f"No title for link: {link}")
                         title = ""
 
                     # Extract the URL description.
+                    # 2023-06-02 update
                     try:
-                        description = a.parent.parent.contents[1].get_text()
+                        description = a.parent.parent.parent.contents[1].get_text()
 
                         # Sometimes Google returns different structures.
                         if description == "":
-                            description = a.parent.parent.contents[2].get_text()
+                            description = a.parent.parent.parent.contents[2].get_text()
 
                     except Exception:
                         ROOT_LOGGER.warning(f"No description for link: {link}")
